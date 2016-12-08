@@ -90,21 +90,20 @@ function is responsible for decrementing the value by one. You will need to use
 the module pattern to achieve this. */
 
 function counterFactory(value) {
-
-  // Code here.
-
-
+  var total = value;
   return {
+    inc: function(num){
+      total++;
+      return total;
+    },
+    dec: function(num){
+      total-- ;
+      return total;
+    }
   }
 }
 
-
 counter = counterFactory(10);
-
-
-
-
-
 
 
 
@@ -122,20 +121,16 @@ function motivation(firstname, lastname){
 
   var welcomeText = 'You\'re doing awesome, keep it up ';
 
-  // code message function here.
-
+  function message(){
+  return welcomeText + firstname + " " + lastname + ".";
+}
 
   //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
 motivation('Billy', 'Bob'); // 'Your doing awesome keep it up Billy Bob
-
-
-
-
-
 
 
 
@@ -165,19 +160,13 @@ var module = (function() {
 	// outside our lexical scope
 
   return {
-    // Code here.
+    publicMethod: privateMethod
   };
 
 })();
 
 // Uncomment this after you create your public method
-//   module.publicMethod();
-
-
-
-
-
-
+  module.publicMethod();
 
 
 
@@ -193,20 +182,18 @@ then 3, etc). Run this code in your console to see what the output is. */
 
 // To make this code work you will need to create a new scope for every iteration.
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000)
-  }
+ for (var i = 0; i <= 5; i++) {
+   newScope(i);
+ }
 
-  function newScope(i) {
-    console.log(i)
-  }
+ function newScope(i) {
+   setTimeout(function() {
+     console.log(i);
+   }, i * 1000)
+ }
 }
+
 timeOutCounter();
-
-
-
 
 
 
@@ -214,10 +201,20 @@ timeOutCounter();
 	#PROBLEM-08
 \******************************************************************************/
 
+
 var funcArray = [];
 
-/*
-  Make the following code work
+function arrayIndex(index) {
+  var total = index;
+  return function(){
+    return index
+  }
+}
+
+for (var i = 0 ; i < 6 ; i++){
+  var test = i;
+  funcArray[i]= arrayIndex(i);
+}
 
   funcArray[0]() //0
   funcArray[1]() //1
@@ -226,5 +223,4 @@ var funcArray = [];
   funcArray[4]() //4
   funcArray[5]() //5
 
-  *Hint: Don't let this fool you. Break down what's really happening here.
-*/
+  //Hint: Don't let this fool you. Break down what's really happening here.
